@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Produk</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="main-layout">
+        <%- include('layout/sidebar') %>
+        <div class="main-content">
+            <%- include('layout/topbar') %>
+            <div class="produk-bg">
+                <div class="produk-stars"></div>
+                <div class="produk-card-container">
+                    <div class="tambah-produk-container">
+                        <form action="/produk/edit/<%= produk._id %>" method="POST" enctype="multipart/form-data">
+                            <label for="namaProduk">Nama Produk</label>
+                            <input type="text" id="namaProduk" name="namaProduk" value="<%= produk.namaProduk %>" required>
+
+                            <label for="kategori">Kategori</label>
+                            <input type="text" id="kategori" name="kategori" value="<%= produk.kategori %>" required>
+
+                            <label for="harga">Harga</label>
+                            <input type="number" id="harga" name="harga" value="<%= produk.harga %>" required>
+
+                            <label for="stok">Stok</label>
+                            <input type="number" id="stok" name="stok" value="<%= produk.stok %>" required>
+
+                            <label for="foto">Foto (biarkan kosong jika tidak ingin mengubah)</label>
+                            <input type="file" id="foto" name="foto">
+
+                            <% if (produk.foto) { %>
+                                <div style="margin-top:8px;">
+                                    <img src="/img/<%= produk.foto %>" alt="Foto Produk" style="max-width:120px; border-radius:6px;">
+                                </div>
+                            <% } %>
+
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

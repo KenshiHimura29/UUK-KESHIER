@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="auth-bg">
+        <!-- Optional: Tambahkan elemen bintang -->
+        <canvas class="stars"></canvas>
+        <div class="auth-card">
+            <h2>Register</h2>
+            <form action="/auth/register" method="POST">
+                <label for="nama">Nama Pelanggan</label>
+                <input type="text" id="nama" name="nama" required>
+
+                <label for="alamat">Alamat</label>
+                <input type="text" id="alamat" name="alamat" required>
+
+                <label for="telepon">Nomor Telepon</label>
+                <input type="text" id="telepon" name="telepon" required>
+
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Daftar</button>
+            </form>
+            <div class="register-link">
+                Sudah punya akun?
+                <a href="/auth/login">Login</a>
+            </div>
+        </div>
+    </div>
+    <!-- Optional: Script bintang animasi -->
+    <script>
+    // Simple stars animation (optional)
+    const canvas = document.querySelector('.stars');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < 120; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 1.2 + 0.3, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(255,255,255,' + (Math.random() * 0.8 + 0.2) + ')';
+                ctx.fill();
+            }
+        }
+        drawStars();
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawStars();
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<aside class="sidebar gradient-sidebar">
+    <div class="sidebar-header">
+        <% if (user.role === 'admin' || user.role === 'petugas') { %>
+            <h1>KESHIER</h1>
+        <% }
+        else if (user.role === 'pelanggan') { %>
+        <p>KESHIRA STORE</p>
+        <% } %>
+    </div>
+    <nav>
+        <ul>
+            <% if (user.role === 'admin' || user.role === 'petugas') { %>
+                <li><a href="/produk" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/produk') ? 'active' : '' %>">📦 Daftar Produk</a></li>
+                <li><a href="/produk/tambah" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/produk/tambah') ? 'active' : '' %>">➕ Tambah Produk</a></li>
+                <li><a href="/transaksi" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/transaksi') ? 'active' : '' %>">🧾 Daftar Transaksi</a></li>
+            <% } else if (user.role === 'pelanggan') { %>
+                <li><a href="/produk" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/produk') ? 'active' : '' %>">🛒 Daftar Produk</a></li>
+                <li><a href="/keranjang" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/keranjang') ? 'active' : '' %>">🧺 Keranjang Saya</a></li>
+                <li><a href="/transaksi" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/transaksi') ? 'active' : '' %>">🧾 Daftar Transaksi</a></li>
+            <% } %>
+        </ul>
+    </nav>
+    <form action="/auth/logout" method="GET" class="logout-form">
+        <button type="submit" class="btn btn-primary" title="Logout" style="font-size:1.2em; padding:10px 18px;">
+            <span aria-label="Logout">&#128682;</span>
+        </button>
+    </form>
+</aside>

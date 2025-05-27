@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Transaksi Saya</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="main-layout">
+        <%- include('layout/sidebar') %>
+        <div class="main-content">
+            <%- include('layout/topbar') %>
+            <div class="produk-bg">
+                <div class="produk-stars"></div>
+                <div class="produk-card-container">
+                    <div class="button-container" style="margin-bottom:18px; display:flex; justify-content:flex-end;">
+                        <form action="/generate/pdf" method="GET" class="button" style="margin:0;">
+                            <button type="submit" class="btn btn-logout-style" title="Generate PDF">
+                                <span aria-label="PDF" style="font-size:1.2em;">📄</span>
+                                Generate PDF
+                            </button>
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Produk</th>
+                                    <th>Kategori</th>
+                                    <th>Jumlah</th>
+                                    <th>Total Harga</th>
+                                    <th>Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% transaksiList.forEach((transaksi, idx) => { %>
+                                <tr>
+                                    <td data-label="No"><%= idx + 1 %></td>
+                                    <% if (transaksi.produk) { %>
+                                        <td data-label="Produk">
+                                            <img src="/img/<%= transaksi.produk.foto %>" alt="Foto Produk" class="cart-table-img" style="max-width:60px; border-radius:6px; display:block; margin:auto;">
+                                            <div><%= transaksi.produk.namaProduk %></div>
+                                        </td>
+                                        <td data-label="Kategori"><%= transaksi.produk.kategori %></td>
+                                    <% } else { %>
+                                        <td data-label="Produk" colspan="2" style="color:#ffbaba;">(Produk sudah dihapus)</td>
+                                    <% } %>
+                                    <td data-label="Jumlah"><%= transaksi.jumlah %></td>
+                                    <td data-label="Total Harga">Rp <%= transaksi.total?.toLocaleString('id-ID') %></td>
+                                    <td data-label="Tanggal"><%= transaksi.tanggal ? new Date(transaksi.tanggal).toLocaleDateString('id-ID') : '-' %></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

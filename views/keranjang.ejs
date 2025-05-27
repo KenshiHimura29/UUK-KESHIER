@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Keranjang Saya</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-layout">
+        <%- include('layout/sidebar') %>
+        <div class="main-content">
+            <%- include('layout/topbar') %>
+            <div class="produk-bg">
+                <div class="produk-card-container">
+                    <% if (keranjang.length === 0) { %>
+                        <div class="empty-cart-card"><p>Keranjang kamu kosong.....</p></div>
+                    <% } else { %>
+                        <div class="table-responsive">
+                            <table class="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Product Name</th>
+                                        <th>Amount</th>
+                                        <th>Price</th>
+                                        <th>SubTotal</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% keranjang.forEach(item => { %>
+                                        <tr>
+                                            <td>
+                                                <% if (item.foto) { %>
+                                                    <img src="/img/<%= item.foto %>" alt="Product Image" style="max-width:80px; border-radius:6px;" class="produk-list-img">
+                                                <% } else { %>
+                                                    <img src="/img/default-product.png" alt="Default Image" style="max-width:80px; border-radius:6px;">
+                                                <% } %>
+                                            <td><%= item.namaProduk %></td>
+                                            <td>x<%= item.jumlah %></td>
+                                            <td><%= item.harga.toLocaleString('id-ID') %> IDR</td>
+                                            <td><%= (item.harga * item.jumlah).toLocaleString('id-ID') %> IDR</td>
+                                            <td>
+                                                <form action="/keranjang/remove/<%= item._id %>" method="POST">
+                                                    <button type="submit" class="btn btn-danger" style="background:#ff6b6b; color:#fff; border-radius:6px; min-width:40px;" title="Hapus">
+                                                      <span style="font-size:1.2em;" aria-label="Delete">&#128465;</span>
+                                                    </button>                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <form action="/keranjang/checkout" method="POST" style="margin-top:24px; text-align:right;">
+                            <button type="submit" class="btn btn-primary checkout-btn-custom" style="min-width:140px;">Checkout</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

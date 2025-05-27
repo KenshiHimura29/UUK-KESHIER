@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Transaksi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="main-layout">
+        <%- include('layout/sidebar') %>
+        <div class="main-content">
+            <%- include('layout/topbar') %>
+            <div class="produk-bg">
+                <div class="produk-stars"></div>
+                <div class="produk-card-container">
+                    <div class="button-container" style="margin-bottom:18px; display:flex; justify-content:flex-end;">
+                        <% if (user.role !== 'pelanggan') { %>
+                            <form action="/generate/pdf" method="GET" class="button" style="margin:0;">
+                                <button type="submit" class="btn btn-logout-style" title="Generate PDF">
+                                    <span aria-label="PDF" style="font-size:1.2em;">📄</span>
+                                    Generate PDF
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                    <div class="tambah-produk-container" style="width:100%;max-width:900px;background:transparent;box-shadow:none;padding:0;">
+                        <div class="table-responsive">
+                            <table class="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Pengguna</th>
+                                        <th>Nama Produk</th>
+                                        <th>Jumlah</th>
+                                        <th>Total</th>
+                                        <th>Tanggal</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% transaksi.forEach((trx, index) => { %>
+                                    <tr>
+                                        <td data-label="No"><%= index + 1 %></td>
+                                        <td data-label="Nama Pengguna">
+                                            <%= trx.pelanggan && trx.pelanggan.nama ? trx.pelanggan.nama : '-' %>
+                                        </td>
+                                        <td data-label="Nama Produk"><%= trx.nama_produk || '-' %></td>
+                                        <td data-label="Jumlah"><%= trx.jumlah || '-' %></td>
+                                        <td data-label="Total">Rp <%= trx.total?.toLocaleString('id-ID') || '-' %></td>
+                                        <td data-label="Tanggal"><%= trx.tanggal ? new Date(trx.tanggal).toLocaleString('id-ID') : '-' %></td>
+                                        <td data-label="Status"><%= trx.status || '-' %></td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

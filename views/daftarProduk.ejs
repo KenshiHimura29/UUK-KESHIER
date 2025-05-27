@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Produk</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="main-layout">
+        <%- include('layout/sidebar') %>
+        <div class="main-content">
+            <%- include('layout/topbar') %>
+            <div class="produk-bg">
+                <div class="produk-card-container">
+                    <div class="produk-list">
+                        <% produkList.forEach(produk => { %>
+                        <div class="produk-list-item">
+                            <img src="/img/<%= produk.foto %>" alt="Foto Produk" class="produk-list-img">
+                            <div class="produk-list-info">
+                                <div class="produk-info-row">
+                                    <div class="produk-nama"><%= produk.namaProduk %></div>
+                                    <div class="produk-kategori">Kategori: <%= produk.kategori %></div>
+                                    <div class="produk-harga">Harga: <%= produk.harga %></div>
+                                    <div class="produk-stok">Stok: <%= produk.stok %></div>
+                                </div>
+                            </div>
+                            <div class="produk-list-actions">
+                                <% if (user.role === 'admin' || user.role === 'petugas') { %>
+                                    <!-- Admin Edit & Delete Buttons -->
+                                    <form action="/produk/edit/<%= produk._id %>" method="GET">
+                                        <button type="submit" class="btn btn-warning" title="Edit">
+                                            <i class="fas fa-edit"></i> <!-- Icon Edit -->
+                                        </button>
+                                    </form>
+                                    <form action="/produk/delete/<%= produk._id %>" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
+                                        <button type="submit" class="btn btn-danger" title="Delete">
+                                            <i class="fas fa-trash-alt"></i> <!-- Icon Trash (Delete) -->
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <!-- Add to Cart Button (Trigger Modal) -->
+                                    <form action="javascript:void(0)" class="btn-add-to-cart" data-product-id="<%= produk._id %>" style="display:inline;">
+                                        <button type="button" class="btn btn-primary" title="Tambah ke Keranjang" style="padding:7px 12px;">
+                                            <span style="font-size:1.2em;" aria-label="Add to Cart">&#128722;</span>
+                                        </button>
+                                    </form>
+
+                                    <!-- Beli Langsung Button -->
+                                    <form action="/transaksi/beli/<%= produk._id %>" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn btn-primary" title="Beli Langsung" style="padding:7px 12px;">
+                                            <span style="font-size:1.2em;" aria-label="Beli Langsung">&#128179;</span>
+                                        </button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Quantity Modal (Initially Hidden) -->
+    <div id="quantityModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Adjust Quantity</h2>
+            <form id="quantityForm" action="" method="POST">
+                <input type="number" id="quantityInput" name="quantity" min="1" value="1" required />
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    var modal = document.getElementById("quantityModal");
+    var closeBtn = document.getElementsByClassName("close-btn")[0];
+
+    // Add event listener to all "Add to Cart" buttons
+    document.querySelectorAll('.btn-add-to-cart').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Get the product ID from the button's data-product-id attribute
+            var productId = this.dataset.productId;
+
+            // Update the form action with the product ID (this will allow the backend to handle the correct product)
+            document.getElementById('quantityForm').action = `/keranjang/add/${productId}`;
+
+            // Show the modal when the button is clicked
+            modal.style.display = "block";
+        });
+    });
+
+    // Close the modal when the close button is clicked
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    };
+
+    // Close the modal if the user clicks outside the modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Daftar Transaksi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 10px;
+            font-size: 22px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+        td {
+            background-color: #ffffff;
+        }
+        thead {
+            background-color: #e0e0e0;
+        }
+        .table-container {
+            margin: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 12px;
+            }
+            table {
+                width: 100%;
+                margin-top: 20px;
+                border: 1px solid #ccc;
+            }
+            h1 {
+                font-size: 20px;
+                margin-top: 0;
+            }
+            th, td {
+                padding: 6px 12px;
+            }
+            .table-container {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <h1>Daftar Transaksi</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    {{#if transaksi.[0].pelanggan}}
+                    <th>Pelanggan</th>
+                    {{/if}}
+                    <th>Nama Produk</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each transaksi}}
+                <tr>
+                    <td>{{inc @index}}</td>
+                    {{#if pelanggan}}
+                    <td>{{this.pelanggan}}</td>
+                    {{/if}}
+                    <td>{{this.nama_produk}}</td>
+                    <td>{{this.jumlah}}</td>
+                    <td>Rp {{this.total}}</td>
+                    <td>{{this.tanggal}}</td>
+                    <td>{{this.status}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

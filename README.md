@@ -26,7 +26,7 @@ UUK-KESHIER adalah aplikasi kasir ringan dan fleksibel yang dirancang untuk memb
 ## 🛠️ Teknologi yang Digunakan
 
 - **Node.js** + **Express.js** — Backend API
-- **MongoDB** / **MySQL** — Basis data (tergantung implementasi)
+- **MongoDB** / — Basis data 
 - **HTML/CSS/JS** atau **React/Flutter** — Tampilan pengguna
 - **Bootstrap/Tailwind CSS** — Styling responsif
 
